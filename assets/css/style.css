@@ -783,6 +783,25 @@ color:gray;
   background-color:rgba(0,0,0,0.05);
 }
 
+.themeImage {
+  display:inline-block;
+  width:64px;
+  height:64px;
+  border-radius:12px;
+  background-size:cover;
+  background-position:center;
+  border:3px solid transparent;
+  cursor:pointer;
+}
+
+.themeImage:hover {
+  border-color:rgba(0,0,0,0.15);
+}
+
+.themeImageActive {
+  border-color:rgba(0,0,0,0.5);
+}
+
 #classic {
   color:rgb(148,138,84);
 }
