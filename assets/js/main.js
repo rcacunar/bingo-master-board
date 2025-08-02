@@ -10,6 +10,7 @@ let saveData = {
   drawnBingoBalls: [],
   themeColor: "classic",
   backgroundImage: "",
+  overlayOpacity: 50,
   bingoStyle: "ball",
   blockerEnabled: false,
   lastActionWasRemove: false,
@@ -268,28 +269,37 @@ function changeFullScreenImg() {
 
 function changeBG(color) {
   let newColor;
+  let overlayRGB;
   if (color === "classic") {
     newColor = "#d1cc85";
+    overlayRGB = "209,204,133";
     document.getElementById("blocker").style.backgroundImage = "linear-gradient(#c4bd97, #948A54)";
   } else if (color === "red") {
     newColor = "rgb(253, 166, 166)";
+    overlayRGB = "253,166,166";
     document.getElementById("blocker").style.backgroundImage = "linear-gradient(#ed9f9d, #c0504d)";
   } else if (color === "green") {
     newColor = "rgb(150, 206, 129)";
+    overlayRGB = "150,206,129";
     document.getElementById("blocker").style.backgroundImage = "linear-gradient(#a9c571, #77933c)";
   } else if (color === "blue") {
     newColor = "rgb(139, 199, 226)";
+    overlayRGB = "139,199,226";
     document.getElementById("blocker").style.backgroundImage = "linear-gradient(#9abce6, #558ed5)";
   } else if (color === "purple") {
     newColor = "rgb(189, 176, 216)";
+    overlayRGB = "189,176,216";
     document.getElementById("blocker").style.backgroundImage = "linear-gradient(#b3a2c7, #725892)";
   } else {
     newColor = "radial-gradient(#f7eaab, #bfbb73)";
+    overlayRGB = "247,234,171";
   }
   if (saveData.backgroundImage) {
     const bgUrl = `url('./assets/backgrounds/${saveData.backgroundImage}') center/cover no-repeat`;
-    document.getElementById("area").style.background = bgUrl;
-    document.getElementById("fader").style.background = bgUrl;
+    const alpha = saveData.overlayOpacity / 100;
+    const overlay = `linear-gradient(rgba(${overlayRGB}, ${alpha}), rgba(${overlayRGB}, ${alpha})), ${bgUrl}`;
+    document.getElementById("area").style.background = overlay;
+    document.getElementById("fader").style.background = overlay;
   } else {
     document.getElementById("area").style.background = newColor;
     document.getElementById("fader").style.background = newColor;
@@ -675,6 +685,10 @@ function setUpSettings() {
   } else if (saveData.bingoStyle === "vintage") {
     document.getElementById("bingoStyleVintage").style.backgroundColor = "rgba(0,0,0,0.15)";
   }
+  const overlaySlider = document.getElementById('overlaySlider');
+  if (overlaySlider) {
+    overlaySlider.value = saveData.overlayOpacity;
+  }
 }
 
 function changeBackgroundColor(theColor) {
@@ -688,6 +702,12 @@ function changeBackgroundImage(theImage) {
   saveData.backgroundImage = theImage;
   save();
   setUpSettings();
+  changeBG(saveData.themeColor);
+}
+
+function changeOverlayOpacity(value) {
+  saveData.overlayOpacity = parseInt(value, 10);
+  save();
   changeBG(saveData.themeColor);
 }
 
