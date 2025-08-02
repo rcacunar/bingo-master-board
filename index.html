@@ -257,6 +257,8 @@
           <div style="margin:-6px 0 0 28px;">
             <span class="smallButton" id="reset" onclick="resetBoard();">Reiniciar</span>
             <span class="smallButton" id="themes" onclick="hide('masterBoardSlide');show('settingsSlide', 'grid');">Temas</span>
+            <span class="smallButton" id="ceLink" onclick="hide('masterBoardSlide');show('ceSlide', 'flex');">CE</span>
+            <span class="smallButton" id="presentar" onclick="presentVideo();">Presentar</span>
           </div>
           <div class="winningPatternDiv">
             <div class="bingoCard" onclick="hide('masterBoardSlide');show('winningPatternSlide', 'grid');">
@@ -533,7 +535,15 @@
           </div>
         </div>
       </div>
-
+      <div id="ceSlide">
+        <div id="videoControls" style="margin:-6px 0 0 28px;">
+          <span class="smallButton" onclick="hide('ceSlide');show('masterBoardSlide', 'grid');">CE</span>
+          <span class="smallButton" onclick="resetBoard();">Reiniciar</span>
+          <span class="smallButton" onclick="hide('ceSlide');show('settingsSlide', 'grid');">Temas</span>
+          <span class="smallButton" onclick="presentVideo();">Presentar</span>
+        </div>
+        <video id="ceVideo" src="./assets/videos/loop.mp4" loop autoplay muted></video>
+      </div>
     </div>
 
     <script src="./assets/js/featureChecker.js"></script>
