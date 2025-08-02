@@ -3,10 +3,13 @@ const fixedHeight = document.getElementById("area").offsetHeight;
 let isFullScreen = false;
 let loadedMasterBoard = false;
 let keyPressed = false;
+// Add image filenames placed in assets/backgrounds to this array
+const backgroundImages = []; 
 
 let saveData = {
   drawnBingoBalls: [],
   themeColor: "classic",
+  backgroundImage: "",
   bingoStyle: "ball",
   blockerEnabled: false,
   lastActionWasRemove: false,
@@ -283,8 +286,14 @@ function changeBG(color) {
   } else {
     newColor = "radial-gradient(#f7eaab, #bfbb73)";
   }
-	document.getElementById("area").style.background=newColor;
-	document.getElementById("fader").style.background=newColor;
+  if (saveData.backgroundImage) {
+    const bgUrl = `url('./assets/backgrounds/${saveData.backgroundImage}') center/cover no-repeat`;
+    document.getElementById("area").style.background = bgUrl;
+    document.getElementById("fader").style.background = bgUrl;
+  } else {
+    document.getElementById("area").style.background = newColor;
+    document.getElementById("fader").style.background = newColor;
+  }
 }
 
 function activateBingoBall(bingoIDNum) {
@@ -649,6 +658,7 @@ function setUpSettings() {
   document.getElementById("purple").style.backgroundColor = "";
   document.getElementById("bingoStyleBall").style.backgroundColor = "";
   document.getElementById("bingoStyleVintage").style.backgroundColor = "";
+  populateBackgroundImageOptions();
   if (saveData.themeColor === "classic") {
     document.getElementById("classic").style.backgroundColor = "rgba(148,138,84,0.28)";
   } else if (saveData.themeColor === "red") {
@@ -671,6 +681,39 @@ function changeBackgroundColor(theColor) {
   saveData.themeColor = theColor;
   save();
   setUpSettings();
+  changeBG(saveData.themeColor);
+}
+
+function changeBackgroundImage(theImage) {
+  saveData.backgroundImage = theImage;
+  save();
+  setUpSettings();
+  changeBG(saveData.themeColor);
+}
+
+function populateBackgroundImageOptions() {
+  const container = document.getElementById("backgroundImageSelection");
+  if (!container) { return; }
+  container.innerHTML = "";
+  const noneSpan = document.createElement('span');
+  noneSpan.id = 'bgNone';
+  noneSpan.className = 'themeColor';
+  noneSpan.textContent = 'None';
+  noneSpan.onclick = () => { changeBackgroundImage(''); };
+  if (saveData.backgroundImage === "") {
+    noneSpan.style.backgroundColor = "rgba(0,0,0,0.15)";
+  }
+  container.appendChild(noneSpan);
+  for (let i=0;i<backgroundImages.length;i+=1) {
+    const span = document.createElement('span');
+    span.className = 'themeImage';
+    span.style.backgroundImage = `url('./assets/backgrounds/${backgroundImages[i]}')`;
+    span.onclick = () => { changeBackgroundImage(backgroundImages[i]); };
+    if (saveData.backgroundImage === backgroundImages[i]) {
+      span.classList.add('themeImageActive');
+    }
+    container.appendChild(span);
+  }
 }
 
 function toggleWinningPattern(theNumber) {
