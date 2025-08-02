@@ -347,17 +347,21 @@ function changeBG(color) {
     overlayRGB = "150,206,129";
     document.getElementById("blocker").style.backgroundImage = "linear-gradient(#a9c571, #77933c)";
   } else if (color === "blue") {
-    newColor = "rgb(139, 199, 226)";
-    overlayRGB = "139,199,226";
-    document.getElementById("blocker").style.backgroundImage = "linear-gradient(#9abce6, #558ed5)";
-  } else if (color === "purple") {
-    newColor = "rgb(189, 176, 216)";
-    overlayRGB = "189,176,216";
-    document.getElementById("blocker").style.backgroundImage = "linear-gradient(#b3a2c7, #725892)";
-  } else {
-    newColor = "radial-gradient(#f7eaab, #bfbb73)";
-    overlayRGB = "247,234,171";
-  }
+      newColor = "rgb(139, 199, 226)";
+      overlayRGB = "139,199,226";
+      document.getElementById("blocker").style.backgroundImage = "linear-gradient(#9abce6, #558ed5)";
+    } else if (color === "purple") {
+      newColor = "rgb(189, 176, 216)";
+      overlayRGB = "189,176,216";
+      document.getElementById("blocker").style.backgroundImage = "linear-gradient(#b3a2c7, #725892)";
+    } else if (color === "white") {
+      newColor = "#ffffff";
+      overlayRGB = "255,255,255";
+      document.getElementById("blocker").style.backgroundImage = "linear-gradient(#f2f2f2, #cccccc)";
+    } else {
+      newColor = "radial-gradient(#f7eaab, #bfbb73)";
+      overlayRGB = "247,234,171";
+    }
   if (saveData.backgroundImage) {
     const bgUrl = `url('./assets/backgrounds/${saveData.backgroundImage}') center/cover no-repeat`;
     const alpha = saveData.overlayOpacity / 100;
@@ -734,25 +738,28 @@ function setUpMasterBoard() {
 }
 
 function setUpSettings() {
-  document.getElementById("classic").style.backgroundColor = "";
-  document.getElementById("red").style.backgroundColor = "";
-  document.getElementById("green").style.backgroundColor = "";
-  document.getElementById("blue").style.backgroundColor = "";
-  document.getElementById("purple").style.backgroundColor = "";
+    document.getElementById("classic").style.backgroundColor = "";
+    document.getElementById("red").style.backgroundColor = "";
+    document.getElementById("green").style.backgroundColor = "";
+    document.getElementById("blue").style.backgroundColor = "";
+    document.getElementById("purple").style.backgroundColor = "";
+    document.getElementById("white").style.backgroundColor = "";
   document.getElementById("bingoStyleBall").style.backgroundColor = "";
   document.getElementById("bingoStyleVintage").style.backgroundColor = "";
   populateBackgroundImageOptions();
-  if (saveData.themeColor === "classic") {
-    document.getElementById("classic").style.backgroundColor = "rgba(148,138,84,0.28)";
-  } else if (saveData.themeColor === "red") {
-    document.getElementById("red").style.backgroundColor = "rgba(255,0,0,0.2)";
-  } else if (saveData.themeColor === "green") {
-    document.getElementById("green").style.backgroundColor = "rgba(0,128,0,0.2)";
-  } else if (saveData.themeColor === "blue") {
-    document.getElementById("blue").style.backgroundColor = "rgba(51,102,255,0.2)";
-  } else if (saveData.themeColor === "purple") {
-    document.getElementById("purple").style.backgroundColor = "rgba(164,70,153,0.2)";
-  }
+    if (saveData.themeColor === "classic") {
+      document.getElementById("classic").style.backgroundColor = "rgba(148,138,84,0.28)";
+    } else if (saveData.themeColor === "red") {
+      document.getElementById("red").style.backgroundColor = "rgba(255,0,0,0.2)";
+    } else if (saveData.themeColor === "green") {
+      document.getElementById("green").style.backgroundColor = "rgba(0,128,0,0.2)";
+    } else if (saveData.themeColor === "blue") {
+      document.getElementById("blue").style.backgroundColor = "rgba(51,102,255,0.2)";
+    } else if (saveData.themeColor === "purple") {
+      document.getElementById("purple").style.backgroundColor = "rgba(164,70,153,0.2)";
+    } else if (saveData.themeColor === "white") {
+      document.getElementById("white").style.backgroundColor = "rgba(0,0,0,0.1)";
+    }
   if (saveData.bingoStyle === "ball") {
     document.getElementById("bingoStyleBall").style.backgroundColor = "rgba(0,0,0,0.15)";
   } else if (saveData.bingoStyle === "vintage") {

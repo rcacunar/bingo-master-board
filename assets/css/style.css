@@ -566,7 +566,7 @@ margin:0.5em 0;
 .bigBingoBallClass {
   background:#9b9b9b;
   border:2.5px solid #333;
-  opacity:0.4;
+  opacity:1;
 }
 
 #bigBingoBall {
@@ -579,7 +579,7 @@ margin:0.5em 0;
 }
 
 .bigBingoBallClass:hover {
-  opacity:0.7;
+  opacity:1;
 }
 
 #bigBingoLetter {
@@ -656,11 +656,11 @@ margin:0.5em 0;
   border-width: 1px;
   border-color:#333;
   color:#000;
-  opacity:0.4;
+  opacity:1;
 }
 
 .bingoBallBall:hover {
-  opacity:0.7;
+  opacity:1;
 }
 
 .bingoBallBallActiveB {
@@ -668,7 +668,7 @@ margin:0.5em 0;
   color:#6b3205;
   opacity:1;
 font-weight:700;
-  background:radial-gradient(circle at 31.5px 12px, rgba(247, 182, 128,0.85), rgba(228,108,10,0.85));
+  background:radial-gradient(circle at 31.5px 12px, rgba(247, 182, 128,1), rgba(228,108,10,1));
 }
 
 .bingoBallBallActiveI {
@@ -676,7 +676,7 @@ font-weight:700;
   color:#3e4f1f;
   opacity:1;
   font-weight:700;
-  background:radial-gradient(circle at 31.5px 12px, rgba(176, 204, 120,0.85), rgba(135, 170, 63,0.85));
+  background:radial-gradient(circle at 31.5px 12px, rgba(176, 204, 120,1), rgba(135, 170, 63,1));
 }
 
 .bingoBallBallActiveN {
@@ -684,7 +684,7 @@ font-weight:700;
   color:#194551;
   opacity:1;
   font-weight:700;
-  background:radial-gradient(circle at 31.5px 12px, rgba(108, 201, 226,0.85), rgba(84, 165, 188,0.85));
+  background:radial-gradient(circle at 31.5px 12px, rgba(108, 201, 226,1), rgba(84, 165, 188,1));
 }
 
 .bingoBallBallActiveG {
@@ -692,7 +692,7 @@ font-weight:700;
   color:#352944;
   opacity:1;
   font-weight:700;
-  background:radial-gradient(circle at 31.5px 12px, rgba(195, 164, 234,0.85), rgba(159, 129, 193,0.85));
+  background:radial-gradient(circle at 31.5px 12px, rgba(195, 164, 234,1), rgba(159, 129, 193,1));
 }
 
 .bingoBallBallActiveO {
@@ -700,11 +700,11 @@ font-weight:700;
   color:#5e2221;
   opacity:1;
   font-weight:700;
-  background:radial-gradient(circle at 31.5px 12px, rgba(255, 138, 135,0.85), rgba(221, 98, 95,0.85));
+  background:radial-gradient(circle at 31.5px 12px, rgba(255, 138, 135,1), rgba(221, 98, 95,1));
 }
 
 .bingoBallBallActiveB:hover, .bingoBallBallActiveI:hover, .bingoBallBallActiveN:hover, .bingoBallBallActiveG:hover, .bingoBallBallActiveO:hover {
-  opacity:0.8;
+  opacity:1;
 }
 
 .bingoBallVintage {
@@ -718,11 +718,11 @@ color:gray;
   font-size:52px;
   cursor:pointer;
   color:#000;
-  opacity:0.35;
+  opacity:1;
 }
 
 .bingoBallVintage:hover {
-  opacity:0.7;
+  opacity:1;
 }
 
 .bingoBallVintageActive {
@@ -731,17 +731,17 @@ color:gray;
 }
 
 .bingoBallVintageActive:hover {
-  opacity:0.75;
+  opacity:1;
 }
 
 .bigBingoBallVintage {
   opacity:1;
   font-weight:700;
-  background:rgba(155, 155, 155,0.5);
+  background:rgb(155, 155, 155);
 }
 
 .bigBingoBallVintage:hover {
-  opacity:0.75;
+  opacity:1;
 }
 
 #bingoStyleBall {
@@ -866,7 +866,7 @@ color:gray;
 
 .bingoCard:hover {
   cursor:pointer;
-  opacity:0.75;
+  opacity:1;
 }
 
 .bigBingoCard {
