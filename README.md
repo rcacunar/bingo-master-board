@@ -62,3 +62,25 @@ There are multiple reasons for the switch, including, but not limited to, the fo
 
 ## License
 Bingo Master Board is licensed under the MIT License.
+
+## Run with Docker
+
+You can run Bingo Master Board inside Docker containers.
+
+### Production
+Build and start the container:
+
+```bash
+ docker compose up --build
+```
+
+Then open http://localhost:8080.
+
+### Development
+Use the development configuration to see changes in real time:
+
+```bash
+ docker compose -f docker-compose.dev.yml up
+```
+
+The source code is mounted inside the container so updates are served immediately.
