@@ -566,7 +566,7 @@ margin:0.5em 0;
 .bigBingoBallClass {
   background:#9b9b9b;
   border:2.5px solid #333;
-  opacity:0.21;
+  opacity:0.4;
 }
 
 #bigBingoBall {
@@ -579,7 +579,7 @@ margin:0.5em 0;
 }
 
 .bigBingoBallClass:hover {
-  opacity:0.35;
+  opacity:0.7;
 }
 
 #bigBingoLetter {
@@ -656,11 +656,11 @@ margin:0.5em 0;
   border-width: 1px;
   border-color:#333;
   color:#000;
-  opacity:0.21;
+  opacity:0.4;
 }
 
 .bingoBallBall:hover {
-  opacity:0.54;
+  opacity:0.7;
 }
 
 .bingoBallBallActiveB {
@@ -718,11 +718,11 @@ color:gray;
   font-size:52px;
   cursor:pointer;
   color:#000;
-  opacity:0.17;
+  opacity:0.35;
 }
 
 .bingoBallVintage:hover {
-  opacity:0.54;
+  opacity:0.7;
 }
 
 .bingoBallVintageActive {
