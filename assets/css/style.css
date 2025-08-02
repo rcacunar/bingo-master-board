@@ -170,10 +170,10 @@ body {
   display:none;
   height:100%;
   grid-template-columns:100%;
-  grid-template-rows: 96px 1fr 77px;
+  grid-template-rows: 96px 1fr;
   grid-template-areas: "helpHeader"
-                      "helpContent"
-                      "helpFooter";
+                      "helpContent";
+  position:relative;
 }
 
 #winningPatternSlide {
@@ -299,6 +299,23 @@ h2 {
 
 .helpFooterLabel:hover {
   color:#4297b7;
+}
+
+.backButton {
+  position:absolute;
+  top:10px;
+  left:10px;
+  cursor:pointer;
+  color:#376092;
+  transition:color 0.15s;
+}
+
+.backButton:hover {
+  color:#4297b7;
+}
+
+#overlaySlider {
+  width:200px;
 }
 
 .helpPointer {

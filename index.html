@@ -431,6 +431,9 @@
       </div>
 
       <div id="settingsSlide">
+        <div class="backButton" onclick="hide('settingsSlide');show('masterBoardSlide', 'grid');">
+          Go Back
+        </div>
         <h2>Themes</h2>
         <div class="helpContent">
           <div class="flexCenter">
@@ -447,6 +450,8 @@
               </p>
               <p><strong>Background Image</strong></p>
               <p class="themeSelection" id="backgroundImageSelection"></p>
+              <p><strong>Overlay Transparency</strong></p>
+              <p><input type="range" id="overlaySlider" min="0" max="100" oninput="changeOverlayOpacity(this.value)"></p>
               <p><strong>Bingo Numbers</strong></p>
               <p style="display:flex;justify-content:center;">
                 <span id="bingoStyleBall" onclick="changeBingoStyle('ball');">
@@ -457,11 +462,6 @@
                 </span>
               </p>
             </div>
-          </div>
-        </div>
-        <div class="helpFooter">
-          <div class="helpFooterLabel" onclick="hide('settingsSlide');show('masterBoardSlide', 'grid');">
-            Go Back
           </div>
         </div>
       </div>
