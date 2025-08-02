@@ -11,16 +11,24 @@ app.use(express.static(path.join(__dirname)));
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
-let drawnNumbers = [];
+let gameState = { numbers: [], winningPattern: [], hiddenLetters: [] };
 
 wss.on('connection', (ws) => {
-  ws.send(JSON.stringify({ type: 'state', numbers: drawnNumbers }));
+  ws.send(JSON.stringify({ type: 'state', ...gameState }));
   ws.on('message', (message) => {
     try {
       const data = JSON.parse(message);
-      if (data.type === 'state' && Array.isArray(data.numbers)) {
-        drawnNumbers = data.numbers;
-        const msg = JSON.stringify({ type: 'state', numbers: drawnNumbers });
+      if (data.type === 'state') {
+        if (Array.isArray(data.numbers)) {
+          gameState.numbers = data.numbers;
+        }
+        if (Array.isArray(data.winningPattern)) {
+          gameState.winningPattern = data.winningPattern;
+        }
+        if (Array.isArray(data.hiddenLetters)) {
+          gameState.hiddenLetters = data.hiddenLetters;
+        }
+        const msg = JSON.stringify({ type: 'state', ...gameState });
         wss.clients.forEach((client) => {
           if (client.readyState === WebSocket.OPEN) {
             client.send(msg);
