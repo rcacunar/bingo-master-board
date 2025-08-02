@@ -984,3 +984,21 @@ function keyboardNavCredits(leftOrRight) {
     }
   }
 }
+
+function presentVideo() {
+  hide('masterBoardSlide');
+  show('ceSlide', 'flex');
+  const controls = document.getElementById('videoControls');
+  controls.style.display = 'none';
+  const vid = document.getElementById('ceVideo');
+  vid.classList.add('videoFullScreen');
+  vid.play();
+  vid.addEventListener('click', exitVideoPresentation);
+}
+
+function exitVideoPresentation() {
+  const vid = document.getElementById('ceVideo');
+  vid.classList.remove('videoFullScreen');
+  document.getElementById('videoControls').style.display = 'block';
+  vid.removeEventListener('click', exitVideoPresentation);
+}
