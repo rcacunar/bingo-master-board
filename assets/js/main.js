@@ -4,7 +4,7 @@ let isFullScreen = false;
 let loadedMasterBoard = false;
 let keyPressed = false;
 // Add image filenames placed in assets/backgrounds to this array
-const backgroundImages = []; 
+const backgroundImages = ["bg-1.jpg"]; 
 
 let saveData = {
   drawnBingoBalls: [],
