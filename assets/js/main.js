@@ -50,11 +50,17 @@ function connectSocket() {
   socket.addEventListener('message', (event) => {
     try {
       const data = JSON.parse(event.data);
-      if (data.type === 'state' && Array.isArray(data.numbers)) {
-        const newNums = data.numbers.slice().sort((a, b) => a - b);
+      if (data.type === 'state') {
+        const newNums = Array.isArray(data.numbers) ? data.numbers.slice().sort((a, b) => a - b) : [];
         const currentNums = saveData.drawnBingoBalls.slice().sort((a, b) => a - b);
-        if (JSON.stringify(newNums) !== JSON.stringify(currentNums)) {
-          applyRemoteState(data.numbers);
+        const newPattern = Array.isArray(data.winningPattern) ? data.winningPattern.slice().sort((a, b) => a - b) : [];
+        const currentPattern = saveData.winningPattern.slice().sort((a, b) => a - b);
+        const newHidden = Array.isArray(data.hiddenLetters) ? data.hiddenLetters.slice().sort() : [];
+        const currentHidden = saveData.hiddenBingoLetters.slice().sort();
+        if (JSON.stringify(newNums) !== JSON.stringify(currentNums) ||
+            JSON.stringify(newPattern) !== JSON.stringify(currentPattern) ||
+            JSON.stringify(newHidden) !== JSON.stringify(currentHidden)) {
+          applyRemoteState(data.numbers || [], data.winningPattern || [], data.hiddenLetters || []);
         }
       }
     } catch (e) {
@@ -65,17 +71,33 @@ function connectSocket() {
 
 function sendState() {
   if (socket && socket.readyState === WebSocket.OPEN) {
-    socket.send(JSON.stringify({ type: 'state', numbers: saveData.drawnBingoBalls }));
+    socket.send(JSON.stringify({
+      type: 'state',
+      numbers: saveData.drawnBingoBalls,
+      winningPattern: saveData.winningPattern,
+      hiddenLetters: saveData.hiddenBingoLetters,
+    }));
   }
 }
 
-function applyRemoteState(numbers) {
+function applyRemoteState(numbers, pattern, hiddenLetters) {
   resetBoard(true);
   saveData.drawnBingoBalls = numbers.slice();
+  saveData.winningPattern = pattern.slice();
+  saveData.hiddenBingoLetters = hiddenLetters.slice();
   save();
   for (let i = 0; i < numbers.length; i += 1) {
     loadBingoBall(numbers[i]);
   }
+  for (let i = 0; i < saveData.winningPattern.length; i += 1) {
+    document.getElementById(saveData.winningPattern[i] + "card").classList.add("bingoCardActive2");
+    document.getElementById(saveData.winningPattern[i] + "bigcard").classList.add("bingoCardActive");
+  }
+  const letters = ['B', 'I', 'N', 'G', 'O'];
+  for (let i = 0; i < letters.length; i += 1) {
+    hideBingo(letters[i], "render");
+  }
+  toggleBallsDrawnRemaining("render");
   updateBallStats();
 }
 
@@ -529,7 +551,7 @@ function updateBallStats() {
   document.getElementById("ballsRemainingNum").innerHTML = ballsRemaining;
 }
 
-function hideBingo(bingoLetter, renderOrToggle) {
+function hideBingo(bingoLetter, renderOrToggle, suppressBroadcast = false) {
   let bingoLetterClass;
   let bingoBallsClass;
   if (bingoLetter === "B") {
@@ -566,6 +588,9 @@ function hideBingo(bingoLetter, renderOrToggle) {
       save();
     }
     updateBallStats();
+    if (!suppressBroadcast) {
+      sendState();
+    }
   }
 
   else if (renderOrToggle === "render") {
@@ -837,21 +862,22 @@ function hideBingoLettersBasedOnWinningPattern() {
     }
     hideBingo("", "reset");
     if (bExists === false) {
-      hideBingo('B', 'toggle');
+      hideBingo('B', 'toggle', true);
     }
     if (iExists === false) {
-      hideBingo('I', 'toggle');
+      hideBingo('I', 'toggle', true);
     }
     if (nExists === false) {
-      hideBingo('N', 'toggle');
+      hideBingo('N', 'toggle', true);
     }
     if (gExists === false) {
-      hideBingo('G', 'toggle');
+      hideBingo('G', 'toggle', true);
     }
     if (oExists === false) {
-      hideBingo('O', 'toggle');
+      hideBingo('O', 'toggle', true);
     }
   }
+  sendState();
 }
 
 function navHelp(sectionName) {
