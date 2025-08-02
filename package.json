@@ -1,0 +1,16 @@
+{
+  "name": "bingo-master-board",
+  "version": "1.0.0",
+  "description": "Bingo Master Board with realtime synchronization",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node -e \"console.log('No tests specified')\""
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0",
+    "ws": "^8.18.3"
+  }
+}

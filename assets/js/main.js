@@ -3,8 +3,9 @@ const fixedHeight = document.getElementById("area").offsetHeight;
 let isFullScreen = false;
 let loadedMasterBoard = false;
 let keyPressed = false;
+let socket;
 // Add image filenames placed in assets/backgrounds to this array
-const backgroundImages = ["bg-1.jpg"]; 
+const backgroundImages = ["bg-1.jpg"];
 
 let saveData = {
   drawnBingoBalls: [],
@@ -38,9 +39,50 @@ function save() {
   }
 }
 
+function connectSocket() {
+  const protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+  let port = location.port;
+  if (port === '8080') {
+    port = '3000';
+  }
+  const host = `${location.hostname}${port ? `:${port}` : ''}`;
+  socket = new WebSocket(`${protocol}://${host}`);
+  socket.addEventListener('message', (event) => {
+    try {
+      const data = JSON.parse(event.data);
+      if (data.type === 'state' && Array.isArray(data.numbers)) {
+        const newNums = data.numbers.slice().sort((a, b) => a - b);
+        const currentNums = saveData.drawnBingoBalls.slice().sort((a, b) => a - b);
+        if (JSON.stringify(newNums) !== JSON.stringify(currentNums)) {
+          applyRemoteState(data.numbers);
+        }
+      }
+    } catch (e) {
+      console.error('Invalid message', e);
+    }
+  });
+}
+
+function sendState() {
+  if (socket && socket.readyState === WebSocket.OPEN) {
+    socket.send(JSON.stringify({ type: 'state', numbers: saveData.drawnBingoBalls }));
+  }
+}
+
+function applyRemoteState(numbers) {
+  resetBoard(true);
+  saveData.drawnBingoBalls = numbers.slice();
+  save();
+  for (let i = 0; i < numbers.length; i += 1) {
+    loadBingoBall(numbers[i]);
+  }
+  updateBallStats();
+}
+
 function init() {
-	resize();
-	window.addEventListener('resize', resize);
+        resize();
+        connectSocket();
+        window.addEventListener('resize', resize);
 	document.addEventListener("fullscreenchange", onFullScreenChange, false);
 	document.addEventListener("webkitfullscreenchange", onFullScreenChange, false);
 	document.addEventListener("mozfullscreenchange", onFullScreenChange, false);
@@ -306,7 +348,7 @@ function changeBG(color) {
   }
 }
 
-function activateBingoBall(bingoIDNum) {
+function activateBingoBall(bingoIDNum, suppressBroadcast = false) {
   let typeOfBingoBall = typeOfBingo(bingoIDNum);
   let typeOfBingoBallLetter = typeOfBingoLetter(bingoIDNum);
   let bingoID = bingoIDNum + "bingo";
@@ -337,6 +379,9 @@ function activateBingoBall(bingoIDNum) {
     save();
 	}
   updateBallStats();
+  if (!suppressBroadcast) {
+    sendState();
+  }
 }
 
 function typeOfBingo(num) {
@@ -575,7 +620,7 @@ function toggleBallsDrawnRemaining(renderOrToggle) {
   }
 }
 
-function resetBoard() {
+function resetBoard(suppressBroadcast = false) {
   for (let i=0;i<75;i+=1) {
     document.getElementById(i+1 + "bingo").classList.remove(document.getElementById(i+1 + "bingo").classList.item(2));
   }
@@ -618,6 +663,9 @@ function resetBoard() {
   hideBingo("", "reset");
   clearWinningPattern();
   updateBallStats();
+  if (!suppressBroadcast) {
+    sendState();
+  }
 }
 
 function toggleBlocker() {

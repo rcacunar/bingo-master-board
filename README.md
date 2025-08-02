@@ -68,13 +68,13 @@ Bingo Master Board is licensed under the MIT License.
 You can run Bingo Master Board inside Docker containers.
 
 ### Production
-Build and start the container:
+Build and start the containers:
 
 ```bash
  docker compose up --build
 ```
 
-Then open http://localhost:8080.
+Open http://localhost:8080 for the board. The WebSocket backend runs on http://localhost:3000.
 
 ### Development
 Use the development configuration to see changes in real time:
@@ -83,4 +83,15 @@ Use the development configuration to see changes in real time:
  docker compose -f docker-compose.dev.yml up
 ```
 
-The source code is mounted inside the container so updates are served immediately.
+The source code is mounted inside the containers so updates are served immediately. Visit http://localhost:8080; the backend is available at ws://localhost:3000.
+
+## Real-time synchronization
+
+A minimal Node.js server using WebSockets is included to keep bingo selections in sync across all connected clients.
+
+```bash
+npm install
+npm start
+```
+
+The application will be available at http://localhost:3000. Selecting or resetting numbers in one browser updates the board in real time for every other connected browser.
